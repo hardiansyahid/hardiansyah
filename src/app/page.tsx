@@ -1,5 +1,7 @@
 import { poppins, montserrat } from "@/lib/fonts";
 import CopyrightYear from "@/components/CopyrightYear";
+import Parallax from "@/components/Parallax";
+import FadeInSection from "@/components/FadeInSection";
 
 type Job = {
   title: string;
@@ -21,16 +23,24 @@ type Project = {
   link: string;
 };
 
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Skills", href: "#skills" },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact", href: "#contact" },
+];
+
 export default function Home() {
-  // TODO: replace with your real data
+  // TODO: replace these with your real info
   const name = "Hardiansyah";
   const role = "Full Stack Developer & UI/UX Designer";
   const tagline =
-    "I build clean, usable digital products that solve real problems.";
+    "I craft clean, usable digital products that solve real problems.";
 
-  const about = `I'm a developer focused on crafting intuitive experiences and
-    maintainable systems. With a background spanning front-end polish and
-    back-end architecture, I enjoy turning ideas into reliable, elegant
+  const about = `I'm a developer focused on building intuitive experiences and
+    maintainable systems. With experience spanning front-end polish and
+    back-end architecture, I enjoy turning ideas into elegant, reliable
     products.`;
 
   const jobs: Job[] = [
@@ -41,7 +51,7 @@ export default function Home() {
       location: "Jakarta, Indonesia",
       duties: [
         "Led a team of 4 engineers to ship the company dashboard, cutting load time by 60%.",
-        "Implemented a design system adopted across 3 product lines.",
+        "Designed and implemented a design system adopted across 3 product lines.",
       ],
     },
     {
@@ -51,7 +61,7 @@ export default function Home() {
       location: "Remote",
       duties: [
         "Built responsive landing pages and integrated CMS-driven content.",
-        "Collaborated closely with designers to refine UI components.",
+        "Collaborated with designers to refine UI components and interactions.",
       ],
     },
   ];
@@ -71,7 +81,7 @@ export default function Home() {
     {
       title: "Portfolio Website",
       description:
-        "Minimalist portfolio showcasing my work and writing, built with Next.js and Tailwind.",
+        "A minimalist portfolio showcasing my work and writing, built with Next.js and Tailwind.",
       stack: ["Next.js", "Tailwind CSS", "Vercel"],
       link: "#",
     },
@@ -91,181 +101,227 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={`mx-auto max-w-3xl space-y-24 px-6 py-20 text-base ${poppins.className} text-slate-700`}
-    >
+    <>
       {/* ===== Header ===== */}
-      <header className="flex items-baseline justify-between">
-        <div>
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-200 bg-primary text-white dark:border-slate-800 dark:bg-primary/90">
+        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
+          <a href="#" className="text-lg font-bold">
+            {name}
+          </a>
+          <nav className="hidden gap-1 sm:flex">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="group relative rounded-md px-3 py-2 text-sm font-medium text-slate-300 transition-all hover:-translate-y-0.5 hover:text-accent"
+              >
+                {item.label}
+                <span className="absolute inset-0 -z-10 h-full w-full rounded-md bg-accent opacity-0 transition-opacity group-hover:opacity-10" />
+              </a>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* ===== Hero (with parallax background) ===== */}
+      <section className="relative isolate mt-16 flex min-h-[70vh] items-center justify-center overflow-hidden">
+        {/* parallax decorative blobs */}
+        <div className="absolute inset-0 -z-10">
+          <Parallax speed={0.15} className="absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-500/30 via-emerald-400/20 to-transparent blur-3xl" />
+          <Parallax speed={0.3} className="absolute bottom-0 right-10 h-60 w-60 rounded-full bg-gradient-to-l from-cyan-400/25 via-fuchsia-400/20 to-transparent blur-3xl" />
+          <Parallax speed={0.2} className="absolute top-20 left-8 h-40 w-40 rounded-full bg-gradient-to-br from-amber-400/20 via-orange-300/15 to-transparent blur-2xl" />
+        </div>
+
+        <div className="pointer-events-none absolute -z-10 h-2 w-full bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+
+        <FadeInSection className="text-center">
           <h1
-            className={`text-4xl font-extrabold tracking-tight text-slate-900 ${montserrat.className}`}
+            className={`text-5xl font-extrabold tracking-tight text-slate-900 md:text-6xl ${montserrat.className}`}
           >
             {name}
           </h1>
-          <p className="mt-1 text-sm text-slate-500">{role}</p>
-        </div>
-        <nav className="hidden gap-6 text-sm sm:flex">
-          <a href="#about" className="hover:text-teal-600">
-            About
-          </a>
-          <a href="#experience" className="hover:text-teal-600">
-            Experience
-          </a>
-          <a href="#skills" className="hover:text-teal-600">
-            Skills
-          </a>
-          <a href="#contact" className="hover:text-teal-600">
-            Contact
-          </a>
-        </nav>
-      </header>
-
-      {/* ===== Hero ===== */}
-      <section className="text-center">
-        <h2
-          className={`text-5xl font-extrabold tracking-tight text-slate-900 ${montserrat.className}`}
-        >
-          {name}
-        </h2>
-        <p className="mt-3 text-xl text-slate-500">{tagline}</p>
+          <p className="mt-3 text-xl text-slate-500 dark:text-slate-400">
+            {role}
+          </p>
+          <p className="mt-4 max-w-xl text-slate-500">{tagline}</p>
+          <div className="mt-8 flex justify-center">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-accent/25 ring-2 ring-transparent transition-all hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-xl"
+            >
+              Get in touch
+            </a>
+          </div>
+        </FadeInSection>
       </section>
 
       {/* ===== About ===== */}
-      <section id="about">
-        <h3
-          className={`text-sm font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
-        >
-          About
-        </h3>
-        <p className="mt-4 max-w-xl leading-relaxed text-slate-600">
-          {about}
-        </p>
+      <section id="about" className="px-6 pb-4">
+        <FadeInSection>
+          <h3
+            className={`text-xs font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
+          >
+            About
+          </h3>
+          <p className="mt-4 max-w-xl leading-relaxed text-slate-600 dark:text-slate-300">
+            {about}
+          </p>
+        </FadeInSection>
       </section>
 
       {/* ===== Experience ===== */}
-      <section id="experience">
-        <h3
-          className={`text-sm font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
-        >
-          Experience
-        </h3>
-        <div className="mt-6 space-y-8 border-l-2 border-slate-200 pl-0 sm:pl-6">
-          {jobs.map((job) => (
-            <div key={`${job.title}-${job.company}`} className="relative pl-8 sm:pl-0">
-              <span className="absolute left-[-9px] top-0 hidden h-4 w-4 rounded-full border-2 border-white bg-teal-600 sm:block" />
-              <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                <h4 className="font-semibold text-slate-900">{job.title}</h4>
-                <time className="text-sm text-slate-500">{job.period}</time>
+      <section id="experience" className="px-6">
+        <FadeInSection>
+          <h3
+            className={`text-xs font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
+          >
+            Experience
+          </h3>
+          <div className="mt-6 space-y-10 border-l-2 border-slate-200 pl-0 sm:pl-6">
+            {jobs.map((job) => (
+              <div
+                key={`${job.title}-${job.company}`}
+                className="relative pl-8 sm:pl-0"
+              >
+                <span className="absolute left-[-9px] top-0 hidden h-4 w-4 rounded-full border-2 border-white bg-accent shadow sm:block" />
+                <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                  <h4 className="font-semibold text-slate-900">
+                    {job.title}
+                  </h4>
+                  <time className="text-sm text-slate-500">{job.period}</time>
+                </div>
+                <p className="text-slate-500">{job.company}</p>
+                {job.location && (
+                  <p className="text-xs text-slate-400">{job.location}</p>
+                )}
+                <ul className="mt-2 list-disc list-inside space-y-1 text-sm text-slate-600 marker:text-accent">
+                  {job.duties.map((d) => (
+                    <li key={d}>{d}</li>
+                  ))}
+                </ul>
               </div>
-              <p className="text-slate-500">{job.company}</p>
-              {job.location && (
-                <p className="text-xs text-slate-400">{job.location}</p>
-              )}
-              <ul className="mt-2 list-disc list-inside space-y-1 text-sm text-slate-600 marker:text-teal-600">
-                {job.duties.map((d) => (
-                  <li key={d}>{d}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </FadeInSection>
       </section>
 
       {/* ===== Skills ===== */}
-      <section id="skills">
-        <h3
-          className={`text-sm font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
-        >
-          Skills
-        </h3>
-        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3" role="list">
-          {skills.map((s) => (
-            <li
-              key={s.name}
-              className="flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700"
-            >
-              <span className="text-base">{s.icon}</span>
-              <span>{s.name}</span>
-            </li>
-          ))}
-        </ul>
+      <section id="skills" className="px-6">
+        <FadeInSection>
+          <h3
+            className={`text-xs font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
+          >
+            Skills
+          </h3>
+          <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3" role="list">
+            {skills.map((s) => (
+              <li
+                key={s.name}
+                className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-colors hover:border-accent hover:bg-white dark:border-slate-800 dark:bg-slate-900/40"
+              >
+                <span className="text-base">{s.icon}</span>
+                <span>{s.name}</span>
+              </li>
+            ))}
+          </ul>
+        </FadeInSection>
       </section>
 
       {/* ===== Projects ===== */}
-      <section id="projects">
-        <h3
-          className={`text-sm font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
-        >
-          Projects
-        </h3>
-        <div className="mt-4 space-y-6">
-          {projects.map((p) => (
-            <div key={p.title} className="border-t border-slate-200 pt-4">
-              <h4 className="font-semibold text-slate-900">{p.title}</h4>
-              <p className="mt-1 text-sm text-slate-600">{p.description}</p>
-              <div className="mt-2 flex flex-wrap gap-1.5 text-xs">
-                {p.stack.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded bg-slate-100 px-2 py-0.5 text-slate-600"
-                  >
-                    {t}
-                  </span>
-                ))}
+      <section id="projects" className="px-6">
+        <FadeInSection>
+          <h3
+            className={`text-xs font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
+          >
+            Projects
+          </h3>
+          <div className="mt-4 space-y-6">
+            {projects.map((p) => (
+              <div
+                key={p.title}
+                className="group border-b border-slate-200 pb-4 transition-all hover:border-accent dark:border-slate-800"
+              >
+                <div className="flex items-start justify-between">
+                  <h4 className="font-semibold text-slate-900 group-hover:text-accent">
+                    {p.title}
+                  </h4>
+                  {p.link !== "#" && (
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-accent opacity-0 transition-opacity group-hover:opacity-100"
+                    >
+                      View →
+                    </a>
+                  )}
+                </div>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                  {p.description}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5 text-xs">
+                  {p.stack.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded bg-slate-100 px-2 py-0.5 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-              {p.link !== "#" && (
-                <a
-                  href={p.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-block text-sm font-medium text-teal-600 hover:underline"
-                >
-                  View project →
-                </a>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </FadeInSection>
       </section>
 
       {/* ===== Contact ===== */}
-      <section id="contact">
-        <h3
-          className={`text-sm font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
-        >
-          Contact
-        </h3>
-        <div className="mt-3 space-y-1 text-sm text-slate-600">
-          <p>
-            <span className="font-medium text-slate-900">Email:</span>{" "}
-            <a
-              href={`mailto:${contact.email}`}
-              className="text-teal-600 hover:underline"
-            >
-              {contact.email}
-            </a>
-          </p>
-          <p>
-            <span className="font-medium text-slate-900">Phone:</span>{" "}
-            {contact.phone}
-          </p>
-          <p>
-            <span className="font-medium text-slate-900">Location:</span>{" "}
-            {contact.location}
-          </p>
-        </div>
+      <section id="contact" className="px-6 pb-6">
+        <FadeInSection>
+          <h3
+            className={`text-xs font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
+          >
+            Contact
+          </h3>
+          <div className="mt-3 space-y-1.5 text-sm text-slate-600 dark:text-slate-300">
+            <p>
+              <span className="font-medium text-slate-900 dark:text-slate-200">
+                Email:
+              </span>{" "}
+              <a
+                href={`mailto:${contact.email}`}
+                className="text-accent hover:underline"
+              >
+                {contact.email}
+              </a>
+            </p>
+            <p>
+              <span className="font-medium text-slate-900 dark:text-slate-200">
+                Phone:
+              </span>{" "}
+              {contact.phone}
+            </p>
+            <p>
+              <span className="font-medium text-slate-900 dark:text-slate-200">
+                Location:
+              </span>{" "}
+              {contact.location}
+            </p>
+          </div>
+        </FadeInSection>
       </section>
 
       {/* ===== Footer ===== */}
-      <footer className="border-t border-slate-200 pt-6 text-center text-xs text-slate-500">
-        <p>© <CopyrightYear /> {name}. All rights reserved.</p>
-        <div className="mt-3 flex gap-4 justify-center">
+      <footer className="border-t border-slate-200 px-6 pb-8 pt-8 text-center text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
+        <p>
+          © <CopyrightYear /> {name}. All rights reserved.
+        </p>
+        <div className="mt-4 flex justify-center gap-6">
           <a
             href="https://github.com/hardiansyah"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-teal-600"
+            className="transition-colors hover:text-accent"
           >
             GitHub
           </a>
@@ -273,12 +329,18 @@ export default function Home() {
             href="https://linkedin.com/in/hardiansyah"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-teal-600"
+            className="transition-colors hover:text-accent"
           >
             LinkedIn
           </a>
+          <a
+            href="mailto:hi@hardiansyah.me"
+            className="transition-colors hover:text-accent"
+          >
+            Email
+          </a>
         </div>
       </footer>
-    </main>
+    </>
   );
 }
