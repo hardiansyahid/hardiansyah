@@ -42,7 +42,7 @@ const SectionHeading = ({ children }: { children: string }) => (
 export default function Home() {
   // TODO: replace these with your real info
   const name = "Hardiansyah";
-  const role = "Full Stack Developer & UI/UX Designer";
+  const role = "Software Engineer";
   const tagline =
     "I craft clean, usable digital products that solve real problems.";
 
@@ -173,7 +173,7 @@ export default function Home() {
       </section>
 
       {/* ===== Main content (90%-ish, well-spaced sections) ===== */}
-      <main className="mx-auto max-w-3xl space-y-24 px-6">
+      <main className="mx-auto mt-24 max-w-3xl space-y-24 px-6">
         {/* About */}
         <section id="about">
           <FadeInSection>
