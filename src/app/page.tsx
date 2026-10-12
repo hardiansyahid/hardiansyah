@@ -31,7 +31,6 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
-// Section heading (reuse)
 const SectionHeading = ({ children }: { children: string }) => (
   <h3
     className={`mb-8 text-xs font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
@@ -132,48 +131,51 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ===== Main flow ===== */}
-      <main className="mx-auto max-w-3xl px-6">
-        {/* Hero */}
-        <section className="relative isolate mt-16 flex min-h-[60vh] items-center justify-center overflow-hidden py-28">
-          <div className="absolute inset-0 -z-10">
-            <Parallax
-              speed={0.15}
-              className="absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-500/30 via-emerald-400/20 to-transparent blur-3xl"
-            />
-            <Parallax
-              speed={0.3}
-              className="absolute bottom-0 right-10 h-60 w-60 rounded-full bg-gradient-to-l from-cyan-400/25 via-fuchsia-400/20 to-transparent blur-3xl"
-            />
-            <Parallax
-              speed={0.2}
-              className="absolute top-20 left-8 h-40 w-40 rounded-full bg-gradient-to-br from-amber-400/20 via-orange-300/15 to-transparent blur-2xl"
-            />
-          </div>
+      {/* ===== Hero / Banner (full width) ===== */}
+      <section className="relative isolate mt-16 flex w-full min-h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-primary py-28">
+        {/* banner overlay + parallax decorative blobs */}
+        <div className="absolute inset-0 -z-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-transparent" />
+          <Parallax
+            speed={0.15}
+            className="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-400/25 via-teal-300/15 to-transparent blur-3xl"
+          />
+          <Parallax
+            speed={0.3}
+            className="absolute bottom-[-2.5rem] right-10 h-64 w-64 rounded-full bg-gradient-to-l from-cyan-300/20 via-fuchsia-300/15 to-transparent blur-3xl"
+          />
+          <Parallax
+            speed={0.18}
+            className="absolute top-16 left-8 h-44 w-44 rounded-full bg-gradient-to-br from-amber-300/20 via-orange-200/15 to-transparent blur-2xl"
+          />
+        </div>
 
-          <FadeInSection className="max-w-xl text-center">
-            <h1
-              className={`text-5xl font-extrabold tracking-tight text-slate-900 md:text-6xl ${montserrat.className}`}
+        {/* content: 90% width, centered */}
+        <FadeInSection className="relative z-10 w-[90%] max-w-3xl text-center">
+          <h1
+            className={`text-5xl font-extrabold tracking-tight text-white drop-shadow md:text-6xl ${montserrat.className}`}
+          >
+            {name}
+          </h1>
+          <p className="mt-4 text-xl text-slate-200">
+            {role}
+          </p>
+          <p className="mt-5 max-w-lg text-slate-300">{tagline}</p>
+          <div className="mt-10 flex justify-center">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 text-sm font-medium text-white shadow-lg shadow-accent/30 ring-2 ring-transparent transition-all hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-xl"
             >
-              {name}
-            </h1>
-            <p className="mt-4 text-xl text-slate-500 dark:text-slate-400">
-              {role}
-            </p>
-            <p className="mt-5 max-w-lg text-slate-500">{tagline}</p>
-            <div className="mt-10 flex justify-center">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 text-sm font-medium text-white shadow-lg shadow-accent/25 ring-2 ring-transparent transition-all hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-xl"
-              >
-                Get in touch
-              </a>
-            </div>
-          </FadeInSection>
-        </section>
+              Get in touch
+            </a>
+          </div>
+        </FadeInSection>
+      </section>
 
+      {/* ===== Main content (90%-ish, well-spaced sections) ===== */}
+      <main className="mx-auto max-w-3xl space-y-24 px-6">
         {/* About */}
-        <section id="about" className="pt-4">
+        <section id="about">
           <FadeInSection>
             <SectionHeading>About</SectionHeading>
             <p className="max-w-xl leading-relaxed text-slate-600 dark:text-slate-300">
@@ -312,8 +314,8 @@ export default function Home() {
       </main>
 
       {/* ===== Footer ===== */}
-      <footer className="mt-28 border-t border-slate-200 px-6 pb-12 pt-12 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
-        <div className="mx-auto max-w-3xl">
+      <footer className="mt-28 border-t border-slate-200 pb-12 pt-16 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
+        <div className="mx-auto max-w-3xl px-6">
           <p>
             © <CopyrightYear /> {name}. All rights reserved.
           </p>
