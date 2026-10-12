@@ -157,10 +157,12 @@ export default function Home() {
           >
             {name}
           </h1>
-          <p className="mt-4 text-xl text-slate-200">
+          <p className="mt-4 text-center text-xl text-slate-200">
             {role}
           </p>
-          <p className="mt-5 max-w-lg text-slate-300">{tagline}</p>
+          <p className="mt-5 max-w-2xl text-center text-slate-300">
+            {tagline}
+          </p>
           <div className="mt-10 flex justify-center">
             <a
               href="#contact"
