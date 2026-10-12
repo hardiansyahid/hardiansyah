@@ -160,7 +160,7 @@ export default function Home() {
           <p className="mt-4 text-center text-xl text-slate-200">
             {role}
           </p>
-          <p className="mt-5 max-w-2xl text-center text-slate-300">
+          <p className="mt-5 text-center text-slate-300">
             {tagline}
           </p>
           <div className="mt-10 flex justify-center">
