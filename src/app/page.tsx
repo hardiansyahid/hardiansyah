@@ -207,9 +207,9 @@ export default function Home() {
                   {job.location && (
                     <p className="text-sm text-slate-400">{job.location}</p>
                   )}
-                  <ul className="mt-3 list-disc list-inside space-y-2 text-slate-600 marker:text-accent">
+                  <ul className="mt-3 list-disc list-outside pl-5 space-y-2 text-slate-600 marker:text-accent marker:w-2">
                     {job.duties.map((d) => (
-                      <li key={d} className="text-base">
+                      <li key={d} className="text-base leading-snug">
                         {d}
                       </li>
                     ))}
