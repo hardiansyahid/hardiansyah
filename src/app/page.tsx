@@ -252,16 +252,17 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
         <section id="experience">
           <FadeInSection>
             <SectionHeading>Experience</SectionHeading>
-            <div className="space-y-12 border-l-2 border-slate-700 pl-0 sm:pl-8">
+            <div className="space-y-16 border-l-2 border-slate-700 pl-6 sm:pl-8">
               {jobs.map((job) => (
-                <div
-                  key={`${job.title}-${job.company}`}
-                  className="relative pl-8 sm:pl-0"
-                >
-                  <span className="absolute left-[-14px] top-1 hidden h-4 w-4 rounded-full border-2 border-white bg-accent shadow sm:block" />
-                  <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                <article key={`${job.title}-${job.company}`} className="relative">
+                  <div className="mb-1 flex items-baseline gap-2.5">
+                    <span className="text-xl text-accent" aria-hidden>
+                      ▸
+                    </span>
                     <h4 className="font-semibold text-white">{job.title}</h4>
-                    <time className="text-sm text-slate-400">{job.period}</time>
+                    <time className="ml-auto text-sm text-slate-400">
+                      {job.period}
+                    </time>
                   </div>
                   <p className="text-slate-300">{job.company}</p>
                   {job.location && (
@@ -274,7 +275,7 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
                       </li>
                     ))}
                   </ul>
-                </div>
+                </article>
               ))}
             </div>
           </FadeInSection>
