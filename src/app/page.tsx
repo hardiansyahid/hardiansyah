@@ -11,13 +11,21 @@ type Job = {
   duties: string[];
 };
 
-type Skill = {
-  name: string;
-  icon: string;
+type Education = {
+  school: string;
+  period: string;
+  degree: string;
+  gpa?: string;
+};
+
+type SkillGroup = {
+  category: string;
+  items: string[];
 };
 
 type Project = {
   title: string;
+  role: string;
   description: string;
   stack: string[];
   link: string;
@@ -26,6 +34,7 @@ type Project = {
 const navItems = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
+  { label: "Education", href: "#education" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
@@ -33,77 +42,138 @@ const navItems = [
 
 const SectionHeading = ({ children }: { children: string }) => (
   <h3
-    className={`mb-8 text-xs font-semibold uppercase tracking-wider text-white/70 ${montserrat.className}`}
+    className={`mb-8 text-xs font-semibold uppercase tracking-wider text-slate-400 ${montserrat.className}`}
   >
     {children}
   </h3>
 );
 
 export default function Home() {
-  // Copy-pasted verbatim from /content.md — edit the source there.
+  // ---- Data copied verbatim from /content.md ----
   const name = "Hardiansyah";
   const role = "Software Engineer";
   const tagline =
     "I craft clean, usable digital products that solve real problems.";
+
   const about = `Software Engineer with 5+ years of experience, currently a Full Stack Developer at OttoDigital Group.
 I specialize in PHP (Laravel), SQL, and JavaScript (Vue.js), building systems with a focus on clean architecture and pragmatic problem-solving. I use AI-assisted development tools to move faster, but I still care deeply about solid engineering fundamentals — how and why a system is built, not just that it works.
 Outside of engineering, I have a strong interest in philosophy, art, and science — which shapes how I approach problems: curious, structured, and open to unconventional angles.`;
 
   const jobs: Job[] = [
     {
-      title: "Frontend Engineer",
-      company: "PT Teknologi Canggih",
-      period: "2022 — Present",
-      location: "Jakarta, Indonesia",
+      title: "Full Stack Developer",
+      company: "PT Perkebunan Nusantara",
+      period: "Aug 2020 — Feb 2021",
+      location: "Internship",
       duties: [
-        "Led a team of 4 engineers to ship the company dashboard, cutting load time by 60%.",
-        "Designed and implemented a design system adopted across 3 product lines.",
+        `Maintained, optimized, and supported the official PTPN VII website using Laravel.`,
+        `Developed and enhanced features for the internal e-Office application used by PTPN VII employees using Laravel.`,
       ],
     },
     {
-      title: "Junior Developer",
-      company: "Startup XYZ",
-      period: "2021 — 2022",
-      location: "Remote",
+      title: "Software Engineer",
+      company: "PT Akhdani Reka Solusi",
+      period: "Jun 2021 — Jan 2026",
+      location: "Full time",
       duties: [
-        "Built responsive landing pages and integrated CMS-driven content.",
-        "Collaborated with designers to refine UI components and interactions.",
+        `Co-led the development of an internal Property Management System (PMS) using Laravel and Spring Boot.`,
+        `Developed and optimized features for a national anti-corruption prevention network platform using Quasar and Phalcon.`,
+        `Developed and enhanced electronic data exchange and public officials' asset reporting systems using CodeIgniter and Yii.`,
+        `Design and developed a risk modeling application and dashboard for a state-owned electricity company using Laravel.`,
+        `Developed a military recruitment system for a national defense institution using Laravel and React Native.`,
+        `Developed a recruitment management system for a state-owned pharmaceutical company using ASP.NET MVC.`,
+      ],
+    },
+    {
+      title: "Full Stack Developer",
+      company: "OttoDigital Group",
+      period: "Feb 2026 — Present",
+      location: "Full time",
+      duties: [
+        `Developed and maintained the HelloBill Vica Back Office Point of Sale (POS) application using Laravel.`,
+        `Developed and maintained Point of Sale Food & Beverage (POS F&B) web portal and APIs using Laravel and CodeIgniter.`,
+        `Developed and maintained Point of Sale Retail web portal and APIs using Laravel and CodeIgniter.`,
+        `Built and maintained backend services consumed by mobile applications for POS operations, transactions, and business management.`,
       ],
     },
   ];
 
-  const skills: Skill[] = [
-    { name: "React", icon: "⚛️" },
-    { name: "TypeScript", icon: "TS" },
-    { name: "Next.js", icon: "▲" },
-    { name: "Tailwind CSS", icon: "🌬" },
-    { name: "Node.js", icon: "◼" },
-    { name: "PostgreSQL", icon: "🐘" },
-    { name: "Figma", icon: "🎨" },
-    { name: "Docker", icon: "🐳" },
+  const education: Education[] = [
+    {
+      school: "Universitas Teknokrat Indonesia",
+      period: "2026 - 2020",
+      degree: "Bachelor's degree, Sistem Informasi",
+      gpa: "GPA : 3,80",
+    },
+  ];
+
+  const skillGroups: SkillGroup[] = [
+    {
+      category: "Programming Language",
+      items: ["Php", "Python", "Go", "Javascript"],
+    },
+    {
+      category: "Framework & Library",
+      items: [
+        "Laravel",
+        "Codeigniter",
+        "Vue.js",
+        "React.js",
+        "Quasar",
+        "Tailwind",
+        "Bootstrap",
+      ],
+    },
+    { category: "Database", items: ["PostgreSQL", "MySQL", "MongoDB"] },
+    { category: "Other Tools", items: ["Git", "Sonarqube", "Tableau"] },
   ];
 
   const projects: Project[] = [
     {
-      title: "Portfolio Website",
+      title: "Maintenance & Development Hellobill Vica",
+      role: "Fullstack Developer",
       description:
-        "A minimalist portfolio showcasing my work and writing, built with Next.js and Tailwind.",
-      stack: ["Next.js", "Tailwind CSS", "Vercel"],
-      link: "#",
+        `Hellobill adalah aplikasi Point Of Sales (POS) berbasis subscription milik OttoDigital Group part of salim group.`,
+      stack: ["Laravel", "Codeigniter", "Html", "Javascript", "Css"],
+      link: "https://hellobill.id/en/",
     },
     {
-      title: "Task Tracker App",
+      title: "Maintenance & Development e-LHKPN",
+      role: "Fullstack Developer",
       description:
-        "A focused productivity app for managing tasks and habits, with offline support.",
-      stack: ["React", "TypeScript", "PostgreSQL"],
-      link: "#",
+        `e-LHKPN merupakan daftar seluruh harta kekayaan yang dimiliki oleh penyelenggara negara, Instrumen ini bertujuan mencegah korupsi (KKN) dan meningkatkan transparansi.`,
+      stack: ["Codeigniter", "Yii", "MySQL", "Html", "Javascript", "Css"],
+      link: "https://elhkpn.kpk.go.id",
+    },
+    {
+      title: "Maintenance & Development Jaringan Pencegahan Korupsi (JAGA)",
+      role: "Senior Frontend Developer",
+      description:
+        `JAGA adalah aplikasi pencegahan korupsi yang mendorong transparansi penyelenggaraan pelayanan publik dan pengolahan aset negara.`,
+      stack: ["Quasar Framework", "Phalcon", "PostgreSQL"],
+      link: "https://jaga.id",
+    },
+    {
+      title: "Development WebApp Rekrutmen Biofarma",
+      role: "Frontend Developer",
+      description:
+        `Biofarma rekrutmen adalah aplikasi yang mendukung proses rekrutmen karyawan baru, manage lowongan, test cat hingga input nilai test peserta.`,
+      stack: ["ASP.NET Core", "Html", "Javascript", "Css"],
+      link: "https://rekrutmen.biofarma.co.id/",
+    },
+    {
+      title: "Maintenance & Development Website PTPN 7",
+      role: "Fullstack Developer",
+      description:
+        `PTPN 7 merupakan perusahaan BUMN yang bergerak di sektor perkebunan, fokus pada pengelolaan komoditas agribisnis serta mendukung ketahanan pangan nasional.`,
+      stack: ["Laravel", "PostgreSQL", "Html", "Javascript", "Css"],
+      link: "https://www.ptpn7.com/",
     },
   ];
 
   const contact = {
-    email: "hi@hardiansyah.me",
-    phone: "+62 812-3456-7890",
-    location: "Jakarta, Indonesia",
+    email: "hardiansyahmail@gmail.com",
+    phone: "0851 7680 7682",
   };
 
   return (
@@ -131,9 +201,8 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
 
       {/* ===== Hero / Banner (full width) ===== */}
       <section className="relative isolate mt-16 flex w-full min-h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-primary py-28">
-        {/* parallax decorative blobs */}
         <div className="absolute inset-0 -z-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-transparent" />
           <Parallax
             speed={0.15}
             className="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-400/25 via-teal-300/15 to-transparent blur-3xl"
@@ -148,7 +217,6 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
           />
         </div>
 
-        {/* content: 90% width, centered */}
         <FadeInSection className="relative z-10 w-[90%] max-w-3xl text-center">
           <h1
             className={`text-5xl font-extrabold tracking-tight text-white drop-shadow md:text-6xl ${montserrat.className}`}
@@ -169,7 +237,7 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
       </section>
 
       {/* ===== Main content ===== */}
-      <main className="mx-auto mt-20 max-w-3xl space-y-24 px-6">
+      <main className="mx-auto mt-24 max-w-3xl space-y-24 px-6">
         {/* About */}
         <section id="about">
           <FadeInSection>
@@ -188,14 +256,12 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
               {jobs.map((job) => (
                 <div
                   key={`${job.title}-${job.company}`}
-                  className="relative pl-8 sm:pl-8"
+                  className="relative pl-8 sm:pl-0"
                 >
-                  <span className="absolute left-[-14px] top-0.5 hidden h-4 w-4 rounded-full border-2 border-white bg-accent shadow sm:block" />
+                  <span className="absolute left-[-14px] top-1 hidden h-4 w-4 rounded-full border-2 border-white bg-accent shadow sm:block" />
                   <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
                     <h4 className="font-semibold text-white">{job.title}</h4>
-                    <time className="text-sm text-slate-400">
-                      {job.period}
-                    </time>
+                    <time className="text-sm text-slate-400">{job.period}</time>
                   </div>
                   <p className="text-slate-300">{job.company}</p>
                   {job.location && (
@@ -214,21 +280,48 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
           </FadeInSection>
         </section>
 
+        {/* Education */}
+        <section id="education">
+          <FadeInSection>
+            <SectionHeading>Education</SectionHeading>
+            <div className="space-y-6">
+              {education.map((e) => (
+                <div key={e.school}>
+                  <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                    <h4 className="font-semibold text-white">{e.school}</h4>
+                    <span className="text-sm text-slate-400">{e.period}</span>
+                  </div>
+                  <p className="text-slate-300">{e.degree}</p>
+                  {e.gpa && <p className="text-sm text-slate-400">{e.gpa}</p>}
+                </div>
+              ))}
+            </div>
+          </FadeInSection>
+        </section>
+
         {/* Skills */}
         <section id="skills">
           <FadeInSection>
             <SectionHeading>Skills</SectionHeading>
-            <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3" role="list">
-              {skills.map((s) => (
-                <li
-                  key={s.name}
-                  className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-slate-200 transition-colors hover:border-accent hover:bg-slate-700"
-                >
-                  <span className="text-xl">{s.icon}</span>
-                  <span className="font-medium">{s.name}</span>
-                </li>
+            <div className="space-y-6">
+              {skillGroups.map((g) => (
+                <div key={g.category}>
+                  <h4 className="text-sm font-medium text-slate-300">
+                    {g.category}
+                  </h4>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {g.items.map((s) => (
+                      <span
+                        key={s}
+                        className="rounded-md bg-slate-800 px-3 py-1 text-sm text-slate-200"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </FadeInSection>
         </section>
 
@@ -243,10 +336,15 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
                   className="group border-b border-slate-700 pb-8 transition-all hover:border-accent"
                 >
                   <div className="flex items-start justify-between">
-                    <h4 className="text-xl font-semibold text-white transition-colors group-hover:text-accent">
-                      {p.title}
-                    </h4>
-                    {p.link !== "#" && (
+                    <div>
+                      <h4 className="text-xl font-semibold text-white transition-colors group-hover:text-accent">
+                        {p.title}
+                      </h4>
+                      <p className="mt-0.5 text-sm text-slate-400">
+                        {p.role}
+                      </p>
+                    </div>
+                    {p.link && (
                       <a
                         href={p.link}
                         target="_blank"
@@ -264,7 +362,7 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
                     {p.stack.map((t) => (
                       <span
                         key={t}
-                        className="rounded-md bg-slate-800 px-3 py-1 text-xs text-slate-300"
+                        className="rounded-md bg-slate-800 px-3 py-1 text-sm text-slate-300"
                       >
                         {t}
                       </span>
@@ -294,17 +392,13 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
                 <span className="font-medium text-white">Phone:</span>{" "}
                 {contact.phone}
               </p>
-              <p>
-                <span className="font-medium text-white">Location:</span>{" "}
-                {contact.location}
-              </p>
             </div>
           </FadeInSection>
         </section>
       </main>
 
       {/* ===== Footer ===== */}
-      <footer className="mt-28 border-t border-slate-700 pb-12 pt-16 text-center text-sm text-slate-400">
+      <footer className="mt-28 border-t border-slate-800 pb-12 pt-16 text-center text-sm text-slate-400">
         <div className="mx-auto max-w-3xl px-6">
           <p>
             © <CopyrightYear /> {name}. All rights reserved.
@@ -319,7 +413,7 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/hardiansyah"
+              href="https://linkedin.com/in/hardiansyahid"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-accent"
@@ -327,7 +421,7 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
               LinkedIn
             </a>
             <a
-              href="mailto:hi@hardiansyah.me"
+              href={`mailto:${contact.email}`}
               className="transition-colors hover:text-accent"
             >
               Email
