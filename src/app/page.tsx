@@ -171,7 +171,7 @@ export default function Home() {
       </section>
 
       {/* ===== Main content ===== */}
-      <main className="mx-auto max-w-3xl space-y-24 px-6">
+      <main className="mx-auto mt-20 max-w-3xl space-y-24 px-6">
         {/* About */}
         <section id="about">
           <FadeInSection>
