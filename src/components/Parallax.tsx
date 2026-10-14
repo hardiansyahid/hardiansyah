@@ -2,7 +2,7 @@
 import { ReactNode, useEffect, useState } from "react";
 
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
   speed?: number;
   className?: string;
 };
