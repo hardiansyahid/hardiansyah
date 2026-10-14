@@ -2,6 +2,7 @@ import { poppins, montserrat } from "@/lib/fonts";
 import CopyrightYear from "@/components/CopyrightYear";
 import Parallax from "@/components/Parallax";
 import FadeInSection from "@/components/FadeInSection";
+import { readContent } from "@/lib/content";
 
 type Job = {
   title: string;
@@ -40,15 +41,12 @@ const SectionHeading = ({ children }: { children: string }) => (
 );
 
 export default function Home() {
-  // TODO: replace these with your real info
+  // Content is sourced from /content.md so you can edit the data there.
+  const { about } = readContent();
   const name = "Hardiansyah";
   const role = "Software Engineer";
   const tagline =
     "I craft clean, usable digital products that solve real problems.";
-
-  const about = `Software Engineer with 5+ years of experience, currently a Full Stack Developer at OttoDigital Group.
-I specialize in PHP (Laravel), SQL, and JavaScript (Vue.js), building systems with a focus on clean architecture and pragmatic problem-solving. I use AI-assisted development tools to move faster, but I still care deeply about solid engineering fundamentals — how and why a system is built, not just that it works.
-Outside of engineering, I have a strong interest in philosophy, art, and science — which shapes how I approach problems: curious, structured, and open to unconventional angles.`;
 
   const jobs: Job[] = [
     {
