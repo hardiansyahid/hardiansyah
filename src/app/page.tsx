@@ -190,9 +190,9 @@ export default function Home() {
               {jobs.map((job) => (
                 <div
                   key={`${job.title}-${job.company}`}
-                  className="relative pl-10 sm:pl-12"
+                  className="relative pl-8 sm:pl-8"
                 >
-                  <span className="absolute left-[-12px] top-0.5 hidden h-4 w-4 rounded-full border-2 border-white bg-accent shadow sm:block" />
+                  <span className="absolute left-[-14px] top-0.5 hidden h-4 w-4 rounded-full border-2 border-white bg-accent shadow sm:block" />
                   <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
                     <h4 className="font-semibold text-white">{job.title}</h4>
                     <time className="text-sm text-slate-400">
