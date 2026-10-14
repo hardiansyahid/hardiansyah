@@ -33,7 +33,7 @@ const navItems = [
 
 const SectionHeading = ({ children }: { children: string }) => (
   <h3
-    className={`mb-8 text-xs font-semibold uppercase tracking-wider text-slate-500 ${montserrat.className}`}
+    className={`mb-8 text-xs font-semibold uppercase tracking-wider text-white/70 ${montserrat.className}`}
   >
     {children}
   </h3>
@@ -111,7 +111,7 @@ export default function Home() {
   return (
     <>
       {/* ===== Header ===== */}
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-200 bg-primary text-white dark:border-slate-800">
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-800 bg-primary text-white">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
           <a href="#" className="text-lg font-bold">
             {name}
@@ -133,9 +133,9 @@ export default function Home() {
 
       {/* ===== Hero / Banner (full width) ===== */}
       <section className="relative isolate mt-16 flex w-full min-h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-primary py-28">
-        {/* banner overlay + parallax decorative blobs */}
+        {/* parallax decorative blobs */}
         <div className="absolute inset-0 -z-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
           <Parallax
             speed={0.15}
             className="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-400/25 via-teal-300/15 to-transparent blur-3xl"
@@ -157,12 +157,8 @@ export default function Home() {
           >
             {name}
           </h1>
-          <p className="mt-4 text-center text-xl text-slate-200">
-            {role}
-          </p>
-          <p className="mt-5 text-center text-slate-300">
-            {tagline}
-          </p>
+          <p className="mt-4 text-slate-200">{role}</p>
+          <p className="mt-5 text-slate-300">{tagline}</p>
           <div className="mt-10 flex justify-center">
             <a
               href="#contact"
@@ -174,13 +170,13 @@ export default function Home() {
         </FadeInSection>
       </section>
 
-      {/* ===== Main content (90%-ish, well-spaced sections) ===== */}
-      <main className="mx-auto mt-24 max-w-3xl space-y-24 px-6">
+      {/* ===== Main content ===== */}
+      <main className="mx-auto max-w-3xl space-y-24 px-6">
         {/* About */}
         <section id="about">
           <FadeInSection>
             <SectionHeading>About</SectionHeading>
-            <p className="max-w-xl leading-relaxed text-slate-600 dark:text-slate-300">
+            <p className="max-w-xl leading-relaxed text-slate-300">
               {about}
             </p>
           </FadeInSection>
@@ -190,7 +186,7 @@ export default function Home() {
         <section id="experience">
           <FadeInSection>
             <SectionHeading>Experience</SectionHeading>
-            <div className="space-y-12 border-l-2 border-slate-200 pl-0 sm:pl-8">
+            <div className="space-y-12 border-l-2 border-slate-700 pl-0 sm:pl-8">
               {jobs.map((job) => (
                 <div
                   key={`${job.title}-${job.company}`}
@@ -198,18 +194,18 @@ export default function Home() {
                 >
                   <span className="absolute left-[-9px] top-1 hidden h-4 w-4 rounded-full border-2 border-white bg-accent shadow sm:block" />
                   <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                    <h4 className="font-semibold text-slate-900">
-                      {job.title}
-                    </h4>
-                    <time className="text-sm text-slate-500">{job.period}</time>
+                    <h4 className="font-semibold text-white">{job.title}</h4>
+                    <time className="text-sm text-slate-400">
+                      {job.period}
+                    </time>
                   </div>
-                  <p className="text-slate-500">{job.company}</p>
+                  <p className="text-slate-300">{job.company}</p>
                   {job.location && (
                     <p className="text-sm text-slate-400">{job.location}</p>
                   )}
-                  <ul className="mt-3 list-disc list-outside pl-5 space-y-2 text-slate-600 marker:text-accent marker:w-2">
+                  <ul className="mt-3 list-disc list-outside pl-5 space-y-2 text-slate-300 marker:text-accent marker:w-2">
                     {job.duties.map((d) => (
-                      <li key={d} className="text-base leading-snug">
+                      <li key={d} className="leading-snug">
                         {d}
                       </li>
                     ))}
@@ -228,7 +224,7 @@ export default function Home() {
               {skills.map((s) => (
                 <li
                   key={s.name}
-                  className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-slate-700 transition-colors hover:border-accent hover:bg-white dark:border-slate-800 dark:bg-slate-900/40"
+                  className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-slate-200 transition-colors hover:border-accent hover:bg-slate-700"
                 >
                   <span className="text-xl">{s.icon}</span>
                   <span className="font-medium">{s.name}</span>
@@ -246,10 +242,10 @@ export default function Home() {
               {projects.map((p) => (
                 <div
                   key={p.title}
-                  className="group border-b border-slate-200 pb-8 transition-all hover:border-accent dark:border-slate-800"
+                  className="group border-b border-slate-700 pb-8 transition-all hover:border-accent"
                 >
                   <div className="flex items-start justify-between">
-                    <h4 className="text-xl font-semibold text-slate-900 group-hover:text-accent">
+                    <h4 className="text-xl font-semibold text-white transition-colors group-hover:text-accent">
                       {p.title}
                     </h4>
                     {p.link !== "#" && (
@@ -263,14 +259,14 @@ export default function Home() {
                       </a>
                     )}
                   </div>
-                  <p className="mt-3 max-w-md text-slate-600 dark:text-slate-300">
+                  <p className="mt-3 max-w-md text-slate-300">
                     {p.description}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2 text-sm">
                     {p.stack.map((t) => (
                       <span
                         key={t}
-                        className="rounded-md bg-slate-100 px-3 py-1 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                        className="rounded-md bg-slate-800 px-3 py-1 text-xs text-slate-300"
                       >
                         {t}
                       </span>
@@ -286,11 +282,9 @@ export default function Home() {
         <section id="contact">
           <FadeInSection>
             <SectionHeading>Contact</SectionHeading>
-            <div className="space-y-3 text-base text-slate-600 dark:text-slate-300">
+            <div className="space-y-3 text-base text-slate-300">
               <p>
-                <span className="font-medium text-slate-900 dark:text-slate-200">
-                  Email:
-                </span>{" "}
+                <span className="font-medium text-white">Email:</span>{" "}
                 <a
                   href={`mailto:${contact.email}`}
                   className="text-accent hover:underline"
@@ -299,15 +293,11 @@ export default function Home() {
                 </a>
               </p>
               <p>
-                <span className="font-medium text-slate-900 dark:text-slate-200">
-                  Phone:
-                </span>{" "}
+                <span className="font-medium text-white">Phone:</span>{" "}
                 {contact.phone}
               </p>
               <p>
-                <span className="font-medium text-slate-900 dark:text-slate-200">
-                  Location:
-                </span>{" "}
+                <span className="font-medium text-white">Location:</span>{" "}
                 {contact.location}
               </p>
             </div>
@@ -316,7 +306,7 @@ export default function Home() {
       </main>
 
       {/* ===== Footer ===== */}
-      <footer className="mt-28 border-t border-slate-200 pb-12 pt-16 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
+      <footer className="mt-28 border-t border-slate-700 pb-12 pt-16 text-center text-sm text-slate-400">
         <div className="mx-auto max-w-3xl px-6">
           <p>
             © <CopyrightYear /> {name}. All rights reserved.

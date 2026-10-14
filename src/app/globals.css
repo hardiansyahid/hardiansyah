@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
+/* Dark baseline theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #0f172a; /* slate-950 — dark primary */
-  --primary-light: #1e293b; /* slate-900 */
+  --background: #020617; /* slate-950 (near black) */
+  --foreground: #e2e8f0; /* slate-200 */
+  --primary: #0f172a; /* slate-900 — dark primary */
+  --primary-light: #1e293b; /* slate-800 */
   --accent: #0d9488; /* teal-600 */
   --accent-light: #14b8a0; /* teal-500 */
-  --muted: #64748b;
-  --border: #e2e8f0;
+  --muted: #94a3b8; /* slate-400 */
+  --border: #1e293b; /* slate-800 */
 }
 
 @theme inline {
@@ -17,20 +18,9 @@
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
   --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
   --color-muted: var(--muted);
   --color-border: var(--border);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #020617; /* slate-950 almost black */
-    --foreground: #e2e8f0;
-    --primary: #0f172a;
-    --primary-light: #1e293b;
-    --accent: #14b8a0;
-    --muted: #94a3b8;
-    --border: #1e293b;
-  }
 }
 
 @layer base {
