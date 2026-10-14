@@ -173,7 +173,6 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
 
   const contact = {
     email: "hardiansyahmail@gmail.com",
-    phone: "0851 7680 7682",
   };
 
   return (
@@ -388,10 +387,6 @@ Outside of engineering, I have a strong interest in philosophy, art, and science
                 >
                   {contact.email}
                 </a>
-              </p>
-              <p>
-                <span className="font-medium text-white">Phone:</span>{" "}
-                {contact.phone}
               </p>
             </div>
           </FadeInSection>
