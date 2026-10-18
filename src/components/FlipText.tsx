@@ -8,8 +8,7 @@ type FlipTextProps = {
   duration?: number;
 };
 
-/** A lightweight character-flip treatment adapted for the portfolio hero. */
-export default function FlipText({ children, className = "", duration = 4.8 }: FlipTextProps) {
+export default function FlipText({ children, className = "", duration = 5 }: FlipTextProps) {
   const characters = useMemo(() => Array.from(children), [children]);
 
   return (
@@ -22,7 +21,7 @@ export default function FlipText({ children, className = "", duration = 4.8 }: F
           data-char={character}
           style={{
             "--flip-duration": `${duration}s`,
-            "--flip-delay": `${index * 0.06}s`,
+            "--flip-delay": `${index * 0.15}s`,
           } as CSSProperties}
         >
           {character}
