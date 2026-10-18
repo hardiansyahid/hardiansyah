@@ -17,10 +17,10 @@ export default function FadeInSection({ children, className }: Props) {
     const el = ref.current;
     if (!el) return;
 
-    // If already visible (e.g. on first load within threshold), show immediately.
+    // Reveal the hero immediately, but wait for other sections until they are closer.
     const check = () => {
       const rect = el.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.9) setVisible(true);
+      if (rect.top <= window.innerHeight * 0.75) setVisible(true);
     };
     check();
 
@@ -28,7 +28,7 @@ export default function FadeInSection({ children, className }: Props) {
       ([entry]) => {
         if (entry.isIntersecting) setVisible(true);
       },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.15, rootMargin: "0px 0px -2% 0px" }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -38,10 +38,10 @@ export default function FadeInSection({ children, className }: Props) {
     <div
       ref={ref}
       className={
-        "transition-all duration-700 ease-out " +
+        "transition-[opacity,transform,filter] duration-[1100ms] ease-[cubic-bezier(.22,1,.36,1)] " +
         (visible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-8") +
+          ? "opacity-100 translate-y-0 blur-0"
+          : "opacity-0 translate-y-12 blur-[4px]") +
         (className ? ` ${className}` : "")
       }
     >

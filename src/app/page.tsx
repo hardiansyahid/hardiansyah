@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { montserrat } from "@/lib/fonts";
 import CopyrightYear from "@/components/CopyrightYear";
 import FadeInSection from "@/components/FadeInSection";
+import FlipText from "@/components/FlipText";
 
 type Locale = "en" | "id";
 type Theme = "light" | "dark";
@@ -17,7 +18,7 @@ const ThemeIcon = ({ theme }: { theme: Theme }) => theme === "light" ? <svg aria
 const content = {
   en: {
     nav: ["About", "Experience", "Work", "Contact"], talk: "Let's talk", availability: "Available for thoughtful collaboration",
-    hero: <>I turn complex ideas into <em className="font-medium text-[var(--accent)]">clear</em> digital products.</>, tagline: "Building useful, well-crafted digital products for people and businesses.", workCta: "Explore selected work", emailCta: "Email me", based: "Based in Indonesia",
+    hero: <>I turn complex ideas into <FlipText className="font-medium text-[var(--accent)]">clear</FlipText> digital products.</>, tagline: "Building useful, well-crafted digital products for people and businesses.", workCta: "Explore selected work", emailCta: "Email me", based: "Based in Indonesia",
     aboutEyebrow: "01 / About", aboutTitle: "Engineering with curiosity, care, and a practical mindset.", about: "Software Engineer with 5+ years of experience, currently a Full Stack Developer at OttoDigital Group. I specialize in PHP (Laravel), SQL, and JavaScript (Vue.js), building systems with a focus on clean architecture and pragmatic problem-solving. I use AI-assisted development tools to move faster, while staying grounded in the engineering fundamentals that make products reliable.", years: "Years building", disciplines: "Core disciplines",
     experienceEyebrow: "02 / Experience", experienceTitle: "A record of building reliable systems.", experienceCopy: "A selection of roles where I have contributed across the full product lifecycle—from user-facing interfaces to services and infrastructure.",
     jobs: [
@@ -38,7 +39,7 @@ const content = {
   },
   id: {
     nav: ["Tentang", "Pengalaman", "Karya", "Kontak"], talk: "Mari bicara", availability: "Terbuka untuk kolaborasi yang bermakna",
-    hero: <>Mengubah ide rumit menjadi produk digital yang <em className="font-medium text-[var(--accent)]">jelas</em> dan berguna.</>, tagline: "Membangun produk digital yang berguna dan dirancang dengan baik untuk manusia dan bisnis.", workCta: "Lihat karya pilihan", emailCta: "Kirim email", based: "Berbasis di Indonesia",
+    hero: <>Mengubah ide rumit menjadi produk digital yang <FlipText className="font-medium text-[var(--accent)]">jelas</FlipText> dan berguna.</>, tagline: "Membangun produk digital yang berguna dan dirancang dengan baik untuk manusia dan bisnis.", workCta: "Lihat karya pilihan", emailCta: "Kirim email", based: "Berbasis di Indonesia",
     aboutEyebrow: "01 / Tentang", aboutTitle: "Merekayasa produk dengan rasa ingin tahu, kepedulian, dan pola pikir praktis.", about: "Software Engineer dengan pengalaman lebih dari 5 tahun, saat ini bekerja sebagai Full Stack Developer di OttoDigital Group. Saya mengkhususkan diri pada PHP (Laravel), SQL, dan JavaScript (Vue.js), membangun sistem dengan fokus pada arsitektur yang bersih dan pemecahan masalah yang pragmatis. Saya menggunakan alat pengembangan berbantuan AI untuk bergerak lebih cepat, sambil tetap berpegang pada fondasi engineering yang menjadikan produk andal.", years: "Tahun berkarya", disciplines: "Keahlian utama",
     experienceEyebrow: "02 / Pengalaman", experienceTitle: "Rekam jejak membangun sistem yang andal.", experienceCopy: "Pilihan peran tempat saya berkontribusi di sepanjang siklus produk—dari antarmuka pengguna hingga layanan dan infrastruktur.",
     jobs: [
