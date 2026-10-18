@@ -4,9 +4,9 @@ import "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Hardiansyah | Personal CV",
+  title: "Hardiansyah",
   description:
-    "Personal CV of Hardiansyah — Full Stack Developer & UI/UX Designer.",
+    "Developer Portfolio of Hardiansyah — Software Engineer.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
