@@ -1,430 +1,90 @@
-import { poppins, montserrat } from "@/lib/fonts";
+"use client";
+
+import { useEffect, useState } from "react";
+import { montserrat } from "@/lib/fonts";
 import CopyrightYear from "@/components/CopyrightYear";
-import Parallax from "@/components/Parallax";
 import FadeInSection from "@/components/FadeInSection";
 
-type Job = {
-  title: string;
-  company: string;
-  period: string;
-  location?: string;
-  duties: string[];
-};
+type Locale = "en" | "id";
+type Theme = "light" | "dark";
+type Job = { title: string; company: string; period: string; location: string; duties: string[] };
+type Project = { title: string; role: string; description: string; stack: readonly string[]; link: string };
 
-type Education = {
-  school: string;
-  period: string;
-  degree: string;
-  gpa?: string;
-};
+const projectLinks = ["https://hellobill.id/en/", "https://elhkpn.kpk.go.id", "https://jaga.id", "https://rekrutmen.biofarma.co.id/", "https://www.ptpn7.com/"];
+const ArrowUpRight = () => <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="h-4 w-4"><path d="M3 13 13 3M6 3h7v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+const ThemeIcon = ({ theme }: { theme: Theme }) => theme === "light" ? <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4"><circle cx="10" cy="10" r="3.25" stroke="currentColor" strokeWidth="1.5" /><path d="M10 2v2M10 16v2M18 10h-2M4 10H2M15.66 4.34l-1.42 1.42M5.76 14.24l-1.42 1.42M15.66 15.66l-1.42-1.42M5.76 5.76 4.34 4.34" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg> : <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4"><path d="M16.5 12.45A6.75 6.75 0 0 1 7.55 3.5a6.75 6.75 0 1 0 8.95 8.95Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 
-type SkillGroup = {
-  category: string;
-  items: string[];
-};
+const content = {
+  en: {
+    nav: ["About", "Experience", "Work", "Contact"], talk: "Let's talk", availability: "Available for thoughtful collaboration",
+    hero: <>I turn complex ideas into <em className="font-medium text-[var(--accent)]">clear</em> digital products.</>, tagline: "Building useful, well-crafted digital products for people and businesses.", workCta: "Explore selected work", emailCta: "Email me", based: "Based in Indonesia",
+    aboutEyebrow: "01 / About", aboutTitle: "Engineering with curiosity, care, and a practical mindset.", about: "Software Engineer with 5+ years of experience, currently a Full Stack Developer at OttoDigital Group. I specialize in PHP (Laravel), SQL, and JavaScript (Vue.js), building systems with a focus on clean architecture and pragmatic problem-solving. I use AI-assisted development tools to move faster, while staying grounded in the engineering fundamentals that make products reliable.", years: "Years building", disciplines: "Core disciplines",
+    experienceEyebrow: "02 / Experience", experienceTitle: "A record of building reliable systems.", experienceCopy: "A selection of roles where I have contributed across the full product lifecycle—from user-facing interfaces to services and infrastructure.",
+    jobs: [
+      { title: "Full Stack Developer", company: "PT Perkebunan Nusantara", period: "Aug 2020 — Feb 2021", location: "Internship", duties: ["Maintained, optimized, and supported the official PTPN VII website using Laravel.", "Developed and enhanced features for the internal e-Office application used by PTPN VII employees using Laravel."] },
+      { title: "Software Engineer", company: "PT Akhdani Reka Solusi", period: "Jun 2021 — Jan 2026", location: "Full time", duties: ["Co-led the development of an internal Property Management System (PMS) using Laravel and Spring Boot.", "Developed and optimized features for a national anti-corruption prevention network platform using Quasar and Phalcon.", "Developed and enhanced electronic data exchange and public officials' asset reporting systems using CodeIgniter and Yii.", "Designed and developed a risk modeling application and dashboard for a state-owned electricity company using Laravel.", "Developed a military recruitment system for a national defense institution using Laravel and React Native.", "Developed a recruitment management system for a state-owned pharmaceutical company using ASP.NET MVC."] },
+      { title: "Full Stack Developer", company: "OttoDigital Group", period: "Feb 2026 — Present", location: "Full time", duties: ["Developed and maintained the HelloBill Vica Back Office Point of Sale (POS) application using Laravel.", "Developed and maintained Point of Sale Food & Beverage (POS F&B) web portal and APIs using Laravel and CodeIgniter.", "Built and maintained backend services consumed by mobile applications for POS operations, transactions, and business management."] },
+    ] satisfies Job[],
+    workEyebrow: "03 / Selected work", workTitle: "Products that serve a real purpose.",
+    projects: [
+      { title: "HelloBill", role: "Full-stack Developer · OttoDigital Group", description: "A subscription-based Point of Sale platform for simplifying everyday business operations.", stack: ["Laravel", "CodeIgniter", "Go", "JavaScript"] },
+      { title: "e-LHKPN", role: "Full-stack Developer", description: "A public officials’ asset-reporting system that helps foster transparency and prevent corruption.", stack: ["CodeIgniter", "Yii", "MySQL"] },
+      { title: "JAGA", role: "Senior Frontend Developer", description: "A public-service transparency platform designed to support Indonesia’s corruption-prevention efforts.", stack: ["Quasar", "Phalcon", "PostgreSQL"] },
+      { title: "Biofarma Recruitment", role: "Frontend Developer", description: "A recruitment management application for managing job openings, candidate tests, and assessment results.", stack: ["ASP.NET Core", "JavaScript", "CSS"] },
+      { title: "PTPN VII", role: "Full-stack Developer", description: "The corporate website for a state-owned agribusiness company supporting food resilience in Indonesia.", stack: ["Laravel", "PostgreSQL", "JavaScript"] },
+    ],
+    toolsEyebrow: "04 / Toolkit", toolsTitle: "Tools I reach for.", groups: [["Languages", ["PHP", "JavaScript", "Python", "Go"]], ["Frameworks", ["Laravel", "CodeIgniter", "Vue.js", "React.js", "Quasar"]], ["Data & tools", ["PostgreSQL", "MySQL", "MongoDB", "Git", "SonarQube", "Tableau"]]],
+    educationEyebrow: "05 / Education", degree: "Bachelor's degree, Information Systems", contactEyebrow: "06 / Contact", contact: <>Have an idea worth making? <em className="font-medium text-[var(--accent)]">Let&apos;s talk.</em></>, footer: "Designed and built with care.", languageLabel: "Change language", darkMode: "Switch to dark mode", lightMode: "Switch to light mode",
+  },
+  id: {
+    nav: ["Tentang", "Pengalaman", "Karya", "Kontak"], talk: "Mari bicara", availability: "Terbuka untuk kolaborasi yang bermakna",
+    hero: <>Mengubah ide rumit menjadi produk digital yang <em className="font-medium text-[var(--accent)]">jelas</em> dan berguna.</>, tagline: "Membangun produk digital yang berguna dan dirancang dengan baik untuk manusia dan bisnis.", workCta: "Lihat karya pilihan", emailCta: "Kirim email", based: "Berbasis di Indonesia",
+    aboutEyebrow: "01 / Tentang", aboutTitle: "Merekayasa produk dengan rasa ingin tahu, kepedulian, dan pola pikir praktis.", about: "Software Engineer dengan pengalaman lebih dari 5 tahun, saat ini bekerja sebagai Full Stack Developer di OttoDigital Group. Saya mengkhususkan diri pada PHP (Laravel), SQL, dan JavaScript (Vue.js), membangun sistem dengan fokus pada arsitektur yang bersih dan pemecahan masalah yang pragmatis. Saya menggunakan alat pengembangan berbantuan AI untuk bergerak lebih cepat, sambil tetap berpegang pada fondasi engineering yang menjadikan produk andal.", years: "Tahun berkarya", disciplines: "Keahlian utama",
+    experienceEyebrow: "02 / Pengalaman", experienceTitle: "Rekam jejak membangun sistem yang andal.", experienceCopy: "Pilihan peran tempat saya berkontribusi di sepanjang siklus produk—dari antarmuka pengguna hingga layanan dan infrastruktur.",
+    jobs: [
+      { title: "Full Stack Developer", company: "PT Perkebunan Nusantara", period: "Agu 2020 — Feb 2021", location: "Magang", duties: ["Merawat, mengoptimalkan, dan mendukung situs resmi PTPN VII menggunakan Laravel.", "Mengembangkan dan menyempurnakan fitur aplikasi e-Office internal untuk karyawan PTPN VII menggunakan Laravel."] },
+      { title: "Software Engineer", company: "PT Akhdani Reka Solusi", period: "Jun 2021 — Jan 2026", location: "Penuh waktu", duties: ["Memimpin bersama pengembangan Property Management System (PMS) internal menggunakan Laravel dan Spring Boot.", "Mengembangkan dan mengoptimalkan fitur platform jaringan pencegahan korupsi nasional dengan Quasar dan Phalcon.", "Mengembangkan sistem pertukaran data elektronik dan pelaporan harta pejabat publik menggunakan CodeIgniter dan Yii.", "Merancang dan mengembangkan aplikasi pemodelan risiko serta dashboard untuk perusahaan listrik milik negara.", "Mengembangkan sistem rekrutmen militer untuk institusi pertahanan nasional menggunakan Laravel dan React Native.", "Mengembangkan sistem manajemen rekrutmen untuk perusahaan farmasi BUMN menggunakan ASP.NET MVC."] },
+      { title: "Full Stack Developer", company: "OttoDigital Group", period: "Feb 2026 — Sekarang", location: "Penuh waktu", duties: ["Mengembangkan dan memelihara aplikasi Back Office Point of Sale (POS) HelloBill Vica menggunakan Laravel.", "Mengembangkan dan memelihara portal web serta API Point of Sale Food & Beverage menggunakan Laravel dan CodeIgniter.", "Membangun dan memelihara layanan backend yang digunakan aplikasi mobile untuk operasional POS, transaksi, dan manajemen bisnis."] },
+    ] satisfies Job[],
+    workEyebrow: "03 / Karya pilihan", workTitle: "Produk yang menjawab kebutuhan nyata.",
+    projects: [
+      { title: "HelloBill", role: "Full-stack Developer · OttoDigital Group", description: "Platform Point of Sale berbasis langganan untuk menyederhanakan operasional bisnis sehari-hari.", stack: ["Laravel", "CodeIgniter", "Go", "JavaScript"] },
+      { title: "e-LHKPN", role: "Full-stack Developer", description: "Sistem pelaporan harta kekayaan pejabat publik yang mendukung transparansi dan pencegahan korupsi.", stack: ["CodeIgniter", "Yii", "MySQL"] },
+      { title: "JAGA", role: "Senior Frontend Developer", description: "Platform transparansi layanan publik untuk mendukung upaya pencegahan korupsi di Indonesia.", stack: ["Quasar", "Phalcon", "PostgreSQL"] },
+      { title: "Rekrutmen Biofarma", role: "Frontend Developer", description: "Aplikasi manajemen rekrutmen untuk mengelola lowongan, tes kandidat, dan hasil penilaian.", stack: ["ASP.NET Core", "JavaScript", "CSS"] },
+      { title: "PTPN VII", role: "Full-stack Developer", description: "Situs perusahaan agribisnis BUMN yang mendukung ketahanan pangan Indonesia.", stack: ["Laravel", "PostgreSQL", "JavaScript"] },
+    ],
+    toolsEyebrow: "04 / Keahlian", toolsTitle: "Tools yang saya gunakan.", groups: [["Bahasa", ["PHP", "JavaScript", "Python", "Go"]], ["Framework", ["Laravel", "CodeIgniter", "Vue.js", "React.js", "Quasar"]], ["Data & tools", ["PostgreSQL", "MySQL", "MongoDB", "Git", "SonarQube", "Tableau"]]],
+    educationEyebrow: "05 / Pendidikan", degree: "Sarjana Sistem Informasi", contactEyebrow: "06 / Kontak", contact: <>Punya ide yang layak diwujudkan? <em className="font-medium text-[var(--accent)]">Mari bicara.</em></>, footer: "Dirancang dan dibangun dengan penuh perhatian.", languageLabel: "Ganti bahasa", darkMode: "Ganti ke mode gelap", lightMode: "Ganti ke mode terang",
+  },
+} as const;
 
-type Project = {
-  title: string;
-  role: string;
-  description: string;
-  stack: string[];
-  link: string;
-};
-
-const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Education", href: "#education" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-];
-
-const SectionHeading = ({ children }: { children: string }) => (
-  <h3
-    className={`mb-8 text-xs font-semibold uppercase tracking-wider text-slate-400 ${montserrat.className}`}
-  >
-    {children}
-  </h3>
-);
+function SectionIntro({ eyebrow, title, copy }: { eyebrow: string; title: string; copy?: string }) {
+  return <div className="mb-10 max-w-xl"><p className="section-eyebrow">{eyebrow}</p><h2 className={`mt-3 text-3xl font-semibold tracking-[-0.045em] text-[var(--ink)] sm:text-4xl ${montserrat.className}`}>{title}</h2>{copy && <p className="mt-4 leading-7 text-[var(--muted-ink)]">{copy}</p>}</div>;
+}
 
 export default function Home() {
-  // ---- Data copied verbatim from /content.md ----
-  const name = "Hardiansyah";
-  const role = "Software Engineer";
-  const tagline =
-    "I craft clean, usable digital products that solve real problems.";
+  const [locale, setLocale] = useState<Locale>("en");
+  const [theme, setTheme] = useState<Theme>("light");
+  const t = content[locale];
+  const email = "hardiansyahmail@gmail.com";
+  const nav = [[t.nav[0], "#about"], [t.nav[1], "#experience"], [t.nav[2], "#projects"], [t.nav[3], "#contact"]] as const;
+  const projects: Project[] = t.projects.map((project, index) => ({ ...project, link: projectLinks[index] }));
 
-  const about = `Software Engineer with 5+ years of experience, currently a Full Stack Developer at OttoDigital Group.
-I specialize in PHP (Laravel), SQL, and JavaScript (Vue.js), building systems with a focus on clean architecture and pragmatic problem-solving. I use AI-assisted development tools to move faster, but I still care deeply about solid engineering fundamentals — how and why a system is built, not just that it works.
-Outside of engineering, I have a strong interest in philosophy, art, and science — which shapes how I approach problems: curious, structured, and open to unconventional angles.`;
+  useEffect(() => { document.documentElement.lang = locale; }, [locale]);
+  useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
 
-  const jobs: Job[] = [
-    {
-      title: "Full Stack Developer",
-      company: "PT Perkebunan Nusantara",
-      period: "Aug 2020 — Feb 2021",
-      location: "Internship",
-      duties: [
-        `Maintained, optimized, and supported the official PTPN VII website using Laravel.`,
-        `Developed and enhanced features for the internal e-Office application used by PTPN VII employees using Laravel.`,
-      ],
-    },
-    {
-      title: "Software Engineer",
-      company: "PT Akhdani Reka Solusi",
-      period: "Jun 2021 — Jan 2026",
-      location: "Full time",
-      duties: [
-        `Co-led the development of an internal Property Management System (PMS) using Laravel and Spring Boot.`,
-        `Developed and optimized features for a national anti-corruption prevention network platform using Quasar and Phalcon.`,
-        `Developed and enhanced electronic data exchange and public officials' asset reporting systems using CodeIgniter and Yii.`,
-        `Design and developed a risk modeling application and dashboard for a state-owned electricity company using Laravel.`,
-        `Developed a military recruitment system for a national defense institution using Laravel and React Native.`,
-        `Developed a recruitment management system for a state-owned pharmaceutical company using ASP.NET MVC.`,
-      ],
-    },
-    {
-      title: "Full Stack Developer",
-      company: "OttoDigital Group",
-      period: "Feb 2026 — Present",
-      location: "Full time",
-      duties: [
-        `Developed and maintained the HelloBill Vica Back Office Point of Sale (POS) application using Laravel.`,
-        `Developed and maintained Point of Sale Food & Beverage (POS F&B) web portal and APIs using Laravel and CodeIgniter.`,
-        `Developed and maintained Point of Sale Retail web portal and APIs using Laravel and CodeIgniter.`,
-        `Built and maintained backend services consumed by mobile applications for POS operations, transactions, and business management.`,
-      ],
-    },
-  ];
-
-  const education: Education[] = [
-    {
-      school: "Universitas Teknokrat Indonesia",
-      period: "2026 - 2020",
-      degree: "Bachelor's degree, Sistem Informasi",
-      gpa: "GPA : 3,80",
-    },
-  ];
-
-  const skillGroups: SkillGroup[] = [
-    {
-      category: "Programming Language",
-      items: ["Php", "Python", "Go", "Javascript"],
-    },
-    {
-      category: "Framework & Library",
-      items: [
-        "Laravel",
-        "Codeigniter",
-        "Vue.js",
-        "React.js",
-        "Quasar",
-        "Tailwind",
-        "Bootstrap",
-      ],
-    },
-    { category: "Database", items: ["PostgreSQL", "MySQL", "MongoDB"] },
-    { category: "Other Tools", items: ["Git", "Sonarqube", "Tableau"] },
-  ];
-
-  const projects: Project[] = [
-    {
-      title: "Maintenance & Development Hellobill Vica",
-      role: "Fullstack Developer",
-      description:
-        `Hellobill adalah aplikasi Point Of Sales (POS) berbasis subscription milik OttoDigital Group part of salim group.`,
-      stack: ["Laravel", "Codeigniter", "Html", "Javascript", "Css"],
-      link: "https://hellobill.id/en/",
-    },
-    {
-      title: "Maintenance & Development e-LHKPN",
-      role: "Fullstack Developer",
-      description:
-        `e-LHKPN merupakan daftar seluruh harta kekayaan yang dimiliki oleh penyelenggara negara, Instrumen ini bertujuan mencegah korupsi (KKN) dan meningkatkan transparansi.`,
-      stack: ["Codeigniter", "Yii", "MySQL", "Html", "Javascript", "Css"],
-      link: "https://elhkpn.kpk.go.id",
-    },
-    {
-      title: "Maintenance & Development Jaringan Pencegahan Korupsi (JAGA)",
-      role: "Senior Frontend Developer",
-      description:
-        `JAGA adalah aplikasi pencegahan korupsi yang mendorong transparansi penyelenggaraan pelayanan publik dan pengolahan aset negara.`,
-      stack: ["Quasar Framework", "Phalcon", "PostgreSQL"],
-      link: "https://jaga.id",
-    },
-    {
-      title: "Development WebApp Rekrutmen Biofarma",
-      role: "Frontend Developer",
-      description:
-        `Biofarma rekrutmen adalah aplikasi yang mendukung proses rekrutmen karyawan baru, manage lowongan, test cat hingga input nilai test peserta.`,
-      stack: ["ASP.NET Core", "Html", "Javascript", "Css"],
-      link: "https://rekrutmen.biofarma.co.id/",
-    },
-    {
-      title: "Maintenance & Development Website PTPN 7",
-      role: "Fullstack Developer",
-      description:
-        `PTPN 7 merupakan perusahaan BUMN yang bergerak di sektor perkebunan, fokus pada pengelolaan komoditas agribisnis serta mendukung ketahanan pangan nasional.`,
-      stack: ["Laravel", "PostgreSQL", "Html", "Javascript", "Css"],
-      link: "https://www.ptpn7.com/",
-    },
-  ];
-
-  const contact = {
-    email: "hardiansyahmail@gmail.com",
-  };
-
-  return (
-    <>
-      {/* ===== Header ===== */}
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-800 bg-primary text-white">
-        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
-          <a href="#" className="text-lg font-bold">
-            {name}
-          </a>
-          <nav className="hidden gap-2 sm:flex">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="group relative rounded-md px-3.5 py-2 text-sm font-medium text-slate-300 transition-all hover:-translate-y-0.5 hover:text-accent"
-              >
-                {item.label}
-                <span className="absolute inset-0 -z-10 h-full w-full rounded-md bg-accent opacity-0 transition-opacity group-hover:opacity-10" />
-              </a>
-            ))}
-          </nav>
-        </div>
-      </header>
-
-      {/* ===== Hero / Banner (full width) ===== */}
-      <section className="relative isolate mt-16 flex w-full min-h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-primary py-28">
-        <div className="absolute inset-0 -z-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-transparent" />
-          <Parallax
-            speed={0.15}
-            className="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-400/25 via-teal-300/15 to-transparent blur-3xl"
-          />
-          <Parallax
-            speed={0.3}
-            className="absolute bottom-[-2.5rem] right-10 h-64 w-64 rounded-full bg-gradient-to-l from-cyan-300/20 via-fuchsia-300/15 to-transparent blur-3xl"
-          />
-          <Parallax
-            speed={0.18}
-            className="absolute top-16 left-8 h-44 w-44 rounded-full bg-gradient-to-br from-amber-300/20 via-orange-200/15 to-transparent blur-2xl"
-          />
-        </div>
-
-        <FadeInSection className="relative z-10 w-[90%] max-w-3xl text-center">
-          <h1
-            className={`text-5xl font-extrabold tracking-tight text-white drop-shadow md:text-6xl ${montserrat.className}`}
-          >
-            {name}
-          </h1>
-          <p className="mt-4 text-slate-200">{role}</p>
-          <p className="mt-5 text-slate-300">{tagline}</p>
-          <div className="mt-10 flex justify-center">
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 text-sm font-medium text-white shadow-lg shadow-accent/30 ring-2 ring-transparent transition-all hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-xl"
-            >
-              Get in touch
-            </a>
-          </div>
-        </FadeInSection>
-      </section>
-
-      {/* ===== Main content ===== */}
-      <main className="mx-auto mt-24 max-w-3xl space-y-24 px-6">
-        {/* About */}
-        <section id="about">
-          <FadeInSection>
-            <SectionHeading>About</SectionHeading>
-            <p className="max-w-xl leading-relaxed text-slate-300">
-              {about}
-            </p>
-          </FadeInSection>
-        </section>
-
-        {/* Experience */}
-        <section id="experience">
-          <FadeInSection>
-            <SectionHeading>Experience</SectionHeading>
-            <div className="space-y-16 border-l-2 border-slate-700 pl-6 sm:pl-8">
-              {jobs.map((job) => (
-                <article key={`${job.title}-${job.company}`} className="relative">
-                  <div className="mb-1 flex items-baseline gap-2.5">
-                    <span className="text-xl text-accent" aria-hidden>
-                      ▸
-                    </span>
-                    <h4 className="font-semibold text-white">{job.title}</h4>
-                    <time className="ml-auto text-sm text-slate-400">
-                      {job.period}
-                    </time>
-                  </div>
-                  <p className="text-slate-300">{job.company}</p>
-                  {job.location && (
-                    <p className="text-sm text-slate-400">{job.location}</p>
-                  )}
-                  <ul className="mt-3 list-disc list-outside pl-5 space-y-2 text-slate-300 marker:text-accent marker:w-2">
-                    {job.duties.map((d) => (
-                      <li key={d} className="leading-snug">
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </FadeInSection>
-        </section>
-
-        {/* Education */}
-        <section id="education">
-          <FadeInSection>
-            <SectionHeading>Education</SectionHeading>
-            <div className="space-y-6">
-              {education.map((e) => (
-                <div key={e.school}>
-                  <div className="mb-1 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                    <h4 className="font-semibold text-white">{e.school}</h4>
-                    <span className="text-sm text-slate-400">{e.period}</span>
-                  </div>
-                  <p className="text-slate-300">{e.degree}</p>
-                  {e.gpa && <p className="text-sm text-slate-400">{e.gpa}</p>}
-                </div>
-              ))}
-            </div>
-          </FadeInSection>
-        </section>
-
-        {/* Skills */}
-        <section id="skills">
-          <FadeInSection>
-            <SectionHeading>Skills</SectionHeading>
-            <div className="space-y-6">
-              {skillGroups.map((g) => (
-                <div key={g.category}>
-                  <h4 className="text-sm font-medium text-slate-300">
-                    {g.category}
-                  </h4>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {g.items.map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-md bg-slate-800 px-3 py-1 text-sm text-slate-200"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </FadeInSection>
-        </section>
-
-        {/* Projects */}
-        <section id="projects">
-          <FadeInSection>
-            <SectionHeading>Projects</SectionHeading>
-            <div className="space-y-10">
-              {projects.map((p) => (
-                <div
-                  key={p.title}
-                  className="group border-b border-slate-700 pb-8 transition-all hover:border-accent"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h4 className="text-xl font-semibold text-white transition-colors group-hover:text-accent">
-                        {p.title}
-                      </h4>
-                      <p className="mt-0.5 text-sm text-slate-400">
-                        {p.role}
-                      </p>
-                    </div>
-                    {p.link && (
-                      <a
-                        href={p.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-medium text-accent opacity-0 transition-opacity group-hover:opacity-100"
-                      >
-                        View →
-                      </a>
-                    )}
-                  </div>
-                  <p className="mt-3 max-w-md text-slate-300">
-                    {p.description}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2 text-sm">
-                    {p.stack.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-md bg-slate-800 px-3 py-1 text-sm text-slate-300"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </FadeInSection>
-        </section>
-
-        {/* Contact */}
-        <section id="contact">
-          <FadeInSection>
-            <SectionHeading>Contact</SectionHeading>
-            <div className="space-y-3 text-base text-slate-300">
-              <p>
-                <span className="font-medium text-white">Email:</span>{" "}
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="text-accent hover:underline"
-                >
-                  {contact.email}
-                </a>
-              </p>
-            </div>
-          </FadeInSection>
-        </section>
-      </main>
-
-      {/* ===== Footer ===== */}
-      <footer className="mt-28 border-t border-slate-800 pb-12 pt-16 text-center text-sm text-slate-400">
-        <div className="mx-auto max-w-3xl px-6">
-          <p>
-            © <CopyrightYear /> {name}. All rights reserved.
-          </p>
-          <div className="mt-6 flex justify-center gap-8">
-            <a
-              href="https://github.com/hardiansyah"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-accent"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/hardiansyahid"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-accent"
-            >
-              LinkedIn
-            </a>
-            <a
-              href={`mailto:${contact.email}`}
-              className="transition-colors hover:text-accent"
-            >
-              Email
-            </a>
-          </div>
-        </div>
-      </footer>
-    </>
-  );
+  return <div className="overflow-hidden">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--line)] bg-[color:var(--paper)]/85 backdrop-blur-xl"><div className="mx-auto flex h-[4.75rem] max-w-6xl items-center justify-between px-5 sm:px-8"><a href="#" className={`text-[0.95rem] font-semibold tracking-[-0.04em] text-[var(--ink)] ${montserrat.className}`}>Hardiansyah<span className="text-[var(--accent)]">.</span></a><nav aria-label="Primary navigation" className="hidden items-center gap-1 md:flex">{nav.map(([label, href]) => <a key={href} href={href} className="rounded-full px-3.5 py-2 text-sm text-[var(--muted-ink)] transition hover:bg-[var(--soft)] hover:text-[var(--ink)]">{label}</a>)}</nav><div className="flex items-center gap-2 sm:gap-3"><div className="flex rounded-full border border-[var(--line)] p-1" role="group" aria-label={t.languageLabel}><button type="button" onClick={() => setLocale("en")} aria-pressed={locale === "en"} className={`rounded-full px-2 py-1 text-[.65rem] font-semibold transition sm:px-2.5 sm:text-xs ${locale === "en" ? "bg-[var(--ink)] text-[var(--on-ink)]" : "text-[var(--muted-ink)] hover:text-[var(--ink)]"}`}>EN</button><button type="button" onClick={() => setLocale("id")} aria-pressed={locale === "id"} className={`rounded-full px-2 py-1 text-[.65rem] font-semibold transition sm:px-2.5 sm:text-xs ${locale === "id" ? "bg-[var(--ink)] text-[var(--on-ink)]" : "text-[var(--muted-ink)] hover:text-[var(--ink)]"}`}>ID</button></div><button type="button" aria-label={theme === "light" ? t.darkMode : t.lightMode} onClick={() => setTheme(theme === "light" ? "dark" : "light")} className="grid h-8 w-8 place-items-center rounded-full border border-[var(--line)] text-[var(--ink)] transition hover:border-[var(--line-strong)] hover:bg-[var(--soft)]"><ThemeIcon theme={theme} /></button><a href="#contact" className="inline-flex items-center gap-1 text-xs font-medium text-[var(--ink)] transition hover:text-[var(--accent)] sm:gap-2 sm:text-sm">{t.talk} <ArrowUpRight /></a></div></div></header>
+    <main>
+      <section className="hero-grid relative isolate pt-[4.75rem]"><div className="hero-orb" /><FadeInSection className="relative mx-auto grid min-h-[min(45rem,calc(100vh-4.75rem))] max-w-6xl content-center gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-end lg:py-28"><div className="max-w-4xl"><p className="section-eyebrow">{t.availability}</p><h1 className={`mt-5 max-w-4xl text-5xl font-semibold leading-[1.05] tracking-[-0.065em] text-[var(--ink)] sm:text-6xl lg:text-8xl ${montserrat.className}`}>{t.hero}</h1><p className="mt-7 max-w-xl text-base leading-7 text-[var(--muted-ink)] sm:text-lg">{t.tagline}</p><div className="mt-9 flex flex-wrap items-center gap-3"><a href="#projects" className="inline-flex items-center gap-2 rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-medium text-[var(--on-ink)] transition hover:-translate-y-0.5 hover:bg-[var(--accent)]">{t.workCta} <ArrowUpRight /></a><a href={`mailto:${email}`} className="inline-flex items-center gap-2 rounded-full border border-[var(--line-strong)] px-5 py-3 text-sm font-medium text-[var(--ink)] transition hover:border-[var(--ink)]">{t.emailCta}</a></div></div><div className="flex items-center gap-3 text-sm text-[var(--muted-ink)] lg:pb-2"><span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_5px_rgba(16,185,129,.13)]" />{t.based}</div></FadeInSection></section>
+      <section id="about" className="border-y border-[var(--line)] bg-[var(--soft)]"><FadeInSection className="mx-auto grid max-w-6xl gap-8 px-5 py-20 sm:px-8 md:grid-cols-[.8fr_1.2fr] md:gap-16 md:py-28"><div><p className="section-eyebrow">{t.aboutEyebrow}</p><p className={`mt-4 text-2xl font-semibold leading-tight tracking-[-0.04em] text-[var(--ink)] ${montserrat.className}`}>{t.aboutTitle}</p></div><div><p className="text-base leading-8 text-[var(--muted-ink)]">{t.about}</p><div className="mt-8 flex gap-8 border-t border-[var(--line)] pt-6"><div><p className={`text-3xl font-semibold tracking-[-0.05em] text-[var(--ink)] ${montserrat.className}`}>5+</p><p className="mt-1 text-xs uppercase tracking-[.12em] text-[var(--muted-ink)]">{t.years}</p></div><div><p className={`text-3xl font-semibold tracking-[-0.05em] text-[var(--ink)] ${montserrat.className}`}>3</p><p className="mt-1 text-xs uppercase tracking-[.12em] text-[var(--muted-ink)]">{t.disciplines}</p></div></div></div></FadeInSection></section>
+      <section id="experience" className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28"><FadeInSection><SectionIntro eyebrow={t.experienceEyebrow} title={t.experienceTitle} copy={t.experienceCopy} /><div className="border-t border-[var(--line)]">{t.jobs.map((job) => <article key={`${job.title}-${job.company}`} className="grid gap-5 border-b border-[var(--line)] py-8 md:grid-cols-[11rem_1fr] md:gap-10"><div className="text-sm text-[var(--muted-ink)]"><p>{job.period}</p><p className="mt-1 text-xs uppercase tracking-[.12em]">{job.location}</p></div><div><h3 className={`text-xl font-semibold tracking-[-0.04em] text-[var(--ink)] ${montserrat.className}`}>{job.title}</h3><p className="mt-1 text-[var(--accent)]">{job.company}</p><ul className="mt-5 space-y-2.5 text-sm leading-6 text-[var(--muted-ink)]">{job.duties.map((duty) => <li key={duty} className="relative pl-4 before:absolute before:left-0 before:top-[.63rem] before:h-1 before:w-1 before:rounded-full before:bg-[var(--accent)]">{duty}</li>)}</ul></div></article>)}</div></FadeInSection></section>
+      <section id="projects" className="bg-[#18231e] text-white"><FadeInSection className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28"><div className="mb-10 max-w-xl"><p className="section-eyebrow text-[#a8b5ae]">{t.workEyebrow}</p><h2 className={`mt-3 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl ${montserrat.className}`}>{t.workTitle}</h2></div><div className="grid border-l border-white/15 sm:grid-cols-2 lg:grid-cols-3">{projects.map((project, index) => <a key={project.title} href={project.link} target="_blank" rel="noopener noreferrer" className={`project-card group relative flex min-h-72 flex-col border-r border-t border-white/15 p-6 transition duration-300 ${index > 2 ? "lg:border-b" : ""}`}><span className="project-index text-xs tracking-[.12em] text-[#9faf9f]">0{index + 1}</span><ArrowUpRight /><div className="mt-auto"><p className="project-meta text-sm text-[#c5cdc8]">{project.role}</p><h3 className={`mt-2 text-xl font-semibold leading-tight tracking-[-0.04em] ${montserrat.className}`}>{project.title}</h3><p className="project-description mt-3 text-sm leading-6 text-[#c5cdc8]">{project.description}</p><div className="mt-5 flex flex-wrap gap-2">{project.stack.map((item) => <span key={item} className="project-chip border border-white/20 px-2 py-1 text-[.65rem] uppercase tracking-[.1em] text-[#c5cdc8]">{item}</span>)}</div></div></a>)}</div></FadeInSection></section>
+      <section id="skills" className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28"><FadeInSection><SectionIntro eyebrow={t.toolsEyebrow} title={t.toolsTitle} /><div className="grid gap-px overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--line)] md:grid-cols-3">{t.groups.map(([title, items]) => <div key={title} className="bg-[var(--paper)] p-6"><h3 className={`text-base font-semibold tracking-[-.03em] text-[var(--ink)] ${montserrat.className}`}>{title}</h3><div className="mt-5 flex flex-wrap gap-2">{items.map((item) => <span key={item} className="rounded-full bg-[var(--soft)] px-3 py-1.5 text-sm text-[var(--muted-ink)]">{item}</span>)}</div></div>)}</div></FadeInSection></section>
+      <section className="border-t border-[var(--line)] bg-[var(--soft)]"><FadeInSection className="mx-auto grid max-w-6xl gap-8 px-5 py-16 sm:px-8 md:grid-cols-[.8fr_1.2fr] md:py-20"><p className="section-eyebrow">{t.educationEyebrow}</p><div><p className={`text-xl font-semibold tracking-[-.04em] text-[var(--ink)] ${montserrat.className}`}>Universitas Teknokrat Indonesia</p><p className="mt-2 text-[var(--muted-ink)]">{t.degree}</p><p className="mt-5 text-sm text-[var(--muted-ink)]">2016 — 2020 · GPA 3.80 / 4.00</p></div></FadeInSection></section>
+      <section id="contact" className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32"><FadeInSection className="max-w-3xl"><p className="section-eyebrow">{t.contactEyebrow}</p><h2 className={`mt-3 text-4xl font-semibold leading-[1.08] tracking-[-.055em] text-[var(--ink)] sm:text-6xl ${montserrat.className}`}>{t.contact}</h2><a href={`mailto:${email}`} className="mt-9 inline-flex items-center gap-3 border-b border-[var(--ink)] pb-2 text-lg font-medium text-[var(--ink)] transition hover:border-[var(--accent)] hover:text-[var(--accent)] sm:text-xl">{email}<ArrowUpRight /></a></FadeInSection></section>
+    </main>
+    <footer className="border-t border-[var(--line)] px-5 py-7 sm:px-8"><div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-sm text-[var(--muted-ink)] sm:flex-row sm:items-center"><p>© <CopyrightYear /> Hardiansyah. {t.footer}</p><div className="flex gap-5"><a className="transition hover:text-[var(--accent)]" href="https://github.com/hardiansyah" target="_blank" rel="noopener noreferrer">GitHub</a><a className="transition hover:text-[var(--accent)]" href="https://linkedin.com/in/hardiansyahid" target="_blank" rel="noopener noreferrer">LinkedIn</a><a className="transition hover:text-[var(--accent)]" href={`mailto:${email}`}>Email</a></div></div></footer>
+  </div>;
 }

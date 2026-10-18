@@ -1,64 +1,59 @@
 @import "tailwindcss";
 
-/* Dark baseline theme */
 :root {
-  --background: #020617; /* slate-950 (near black) */
-  --foreground: #e2e8f0; /* slate-200 */
-  --primary: #0f172a; /* slate-900 — dark primary */
-  --primary-light: #1e293b; /* slate-800 */
-  --accent: #0d9488; /* teal-600 */
-  --accent-light: #14b8a0; /* teal-500 */
-  --muted: #94a3b8; /* slate-400 */
-  --border: #1e293b; /* slate-800 */
+  --paper: #f8f8f5;
+  --soft: #f0f1ed;
+  --ink: #18231e;
+  --muted-ink: #65716b;
+  --accent: #217a5a;
+  --line: #dfe2dc;
+  --line-strong: #c6cbc3;
+  --on-ink: #ffffff;
+  --project-hover-ink: #18231e;
+  --project-hover-muted: #65716b;
+  --project-hover-accent: #217a5a;
+  --project-hover-line: #c6cbc3;
+}
+
+[data-theme="dark"] {
+  --paper: #111714;
+  --soft: #19211d;
+  --ink: #edf3ee;
+  --muted-ink: #adb9b1;
+  --accent: #6ec69b;
+  --line: #2b3931;
+  --line-strong: #425349;
+  --on-ink: #111714;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-light: var(--primary-light);
-  --color-accent: var(--accent);
-  --color-accent-light: var(--accent-light);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
 }
 
 @layer base {
-  body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-poppins);
-    scroll-behavior: smooth;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-montserrat);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
+  * { border-color: var(--line); }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-poppins), sans-serif; transition: background-color .25s ease, color .25s ease; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: #b7dacb; color: var(--ink); }
 }
 
-/* decorative keyframes */
-@keyframes pulse-slow {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
+.section-eyebrow { color: var(--accent); font-size: .7rem; font-weight: 600; letter-spacing: .14em; line-height: 1.2; text-transform: uppercase; }
+.hero-grid { background-color: var(--paper); background-image: linear-gradient(color-mix(in srgb, var(--ink) 5%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--ink) 5%, transparent) 1px, transparent 1px); background-size: 48px 48px; }
+.hero-orb { background: radial-gradient(circle, rgba(81,171,126,.18) 0, rgba(81,171,126,.08) 28%, transparent 68%); filter: blur(12px); height: min(38rem, 80vw); pointer-events: none; position: absolute; right: -12rem; top: -8rem; width: min(38rem, 80vw); }
+.project-card:hover { background: #fff; color: #18231e; }
+.project-card:hover .project-index,
+.project-card:hover .project-meta { color: #217a5a; }
+.project-card:hover .project-description,
+.project-card:hover .project-chip { color: #65716b; }
+.project-card:hover .project-chip { border-color: #c6cbc3; }
 
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
-}
+[data-theme="dark"] .project-card:hover { background: #2a3a31; color: #fff; }
+[data-theme="dark"] .project-card:hover .project-index,
+[data-theme="dark"] .project-card:hover .project-meta { color: #8bdcaf; }
+[data-theme="dark"] .project-card:hover .project-description,
+[data-theme="dark"] .project-card:hover .project-chip { color: #d2ddd5; }
+[data-theme="dark"] .project-card:hover .project-chip { border-color: #668171; }
+
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
