@@ -22,7 +22,7 @@ export default function FlipText({ children, className = "", duration = 4.8 }: F
           data-char={character}
           style={{
             "--flip-duration": `${duration}s`,
-            "--flip-delay": `${(index / Math.max(characters.length, 1)) * 0.42}s`,
+            "--flip-delay": `${index * 0.06}s`,
           } as CSSProperties}
         >
           {character}
